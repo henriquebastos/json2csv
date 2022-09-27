@@ -35,7 +35,7 @@ def tabulate(iterable, sep='__'):
             yield row.copy()
         elif level < last_level:
             yield row.copy()
-            for n in range(last_level - level):
+            for _ in range(last_level - level):
                 row.popitem()
 
         row[header] = value

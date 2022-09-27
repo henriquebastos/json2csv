@@ -30,7 +30,7 @@ class MultiValueDict(dict):
         super().__init__(key_to_list_mapping)
 
     def __repr__(self):
-        return "<%s: %s>" % (self.__class__.__name__, super().__repr__())
+        return f"<{self.__class__.__name__}: {super().__repr__()}>"
 
     def __getitem__(self, key):
         """
@@ -81,9 +81,7 @@ class MultiValueDict(dict):
             val = self[key]
         except KeyError:
             return default
-        if val == []:
-            return default
-        return val
+        return default if val == [] else val
 
     def _getlist(self, key, default=None, force_list=False):
         """
@@ -94,9 +92,7 @@ class MultiValueDict(dict):
         try:
             values = super().__getitem__(key)
         except KeyError:
-            if default is None:
-                return []
-            return default
+            return [] if default is None else default
         else:
             if force_list:
                 values = list(values) if values is not None else None
